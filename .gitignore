@@ -1,5 +1,7 @@
 build
 
+markov_chain.json
+
 # Logs
 logs
 *.log
