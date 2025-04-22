@@ -54,7 +54,7 @@ class MessageReactionAdd extends BotEvent {
     }
 
     private buildMarkovChain(text: string, order: number) {
-        const words = text.split(/\s+/);
+        const words = text.toLowerCase().split(/\s+/);
         const markovChain: any = {};
     
         for (let i = 0; i <= words.length - order; i++) {
