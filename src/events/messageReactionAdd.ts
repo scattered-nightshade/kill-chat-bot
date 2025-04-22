@@ -37,7 +37,7 @@ class MessageReactionAdd extends BotEvent {
                 return;
             }
 
-            const markovChain = this.buildMarkovChain(message, 4);
+            const markovChain = this.buildMarkovChain(message, 3);
 
             this.saveMarkovChain(markovChain);
 

@@ -24,7 +24,7 @@ export class KillChatCommand extends InteractionCommand {
             return;
         }
 
-        const generatedMessage = this.generateMessage(markovChain, 'the', randomIntInRange(25, 100));
+        const generatedMessage = this.generateMessage(markovChain, 3, randomIntInRange(25, 100));
 
         interaction.reply({ content: generatedMessage });
 
@@ -41,26 +41,30 @@ export class KillChatCommand extends InteractionCommand {
         return {};
     }
 
-    private generateMessage(markovChain: any, startWord: string, maxWords: number): string {
-        let currentWord = startWord;
-        const generatedMessage = [currentWord];
+    private generateMessage(markovChain: any, order: number, maxWords: number): string {
+        const states = Object.keys(markovChain);
+
+        if (states.length === 0) {
+            return 'No data to generate message.';
+        }
+
+        let currentState = states[Math.floor(Math.random() * states.length)];
+        const generatedWords = currentState.split(' ');
 
         for (let i = 0; i < maxWords; i++) {
-            const nextWords = markovChain[currentWord];
+            const nextWords = markovChain[currentState];
 
             if (!nextWords || nextWords.length === 0) {
                 break;
             }
 
-            const randomIndex = Math.floor(Math.random() * nextWords.length);
-            const nextWord = nextWords[randomIndex];
+            const nextWord = nextWords[Math.floor(Math.random() * nextWords.length)];
+            generatedWords.push(nextWord);
 
-            generatedMessage.push(nextWord);
-
-            currentWord = nextWord;
+            currentState = generatedWords.slice(-order).join(' ');
         }
 
-        return generatedMessage.join(' ');
+        return generatedWords.join(' ');
     }
 }
 
