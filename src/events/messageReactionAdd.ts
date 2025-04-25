@@ -42,6 +42,7 @@ class MessageReactionAdd extends BotEvent {
             this.saveMarkovChain(markovChain);
 
             if (!author) {
+                console.warn(`Failed to find author`);
                 return;
             }
 
